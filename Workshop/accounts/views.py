@@ -1,13 +1,20 @@
+from django.urls import reverse_lazy
+from django.views import generic as views
+from django.contrib.auth import views as auth_view, get_user_model
 from django.shortcuts import render
 
-
-def login_user(request):
-    return render(request, 'accounts/login-page.html')
+from Workshop.accounts.forms import UserCreateForm
 
 
-def register_user(request):
-    return render(request, 'accounts/register-page.html')
 
+class SignInView(auth_view.LoginView):
+    template_name = 'accounts/login-page.html'
+
+
+class SignUpView(views.CreateView):
+    template_name = 'accounts/register-page.html'
+    form_class = UserCreateForm
+    success_url = reverse_lazy('index')
 
 def delete_user(request, pk):
     return render(request, 'accounts/profile-delete-page.html')
