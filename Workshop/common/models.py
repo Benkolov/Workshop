@@ -1,6 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
 from Workshop.photos.models import Photo
+
+UserModel = get_user_model()
 
 
 class PhotoComment(models.Model):
@@ -26,10 +29,22 @@ class PhotoComment(models.Model):
     )
 
 
+user = models.ForeignKey(
+    UserModel,
+    on_delete=models.RESTRICT,
+    )
+
+
+
 class PhotoLike(models.Model):
     photo = models.ForeignKey(
         Photo,
         on_delete=models.RESTRICT,
         null=False,
         blank=True,
+    )
+
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.RESTRICT,
     )

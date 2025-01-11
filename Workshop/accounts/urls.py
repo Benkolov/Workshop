@@ -1,13 +1,15 @@
+from django.contrib.auth.views import LogoutView
 from django.urls import path, include
 
-from Workshop.accounts.views import details_user, edit_user, delete_user, SignInView, SignUpView
+from Workshop.accounts.views import SignInView, SignUpView, UserDetailsView, UserEditView, UserDeleteView
 
 urlpatterns = [
     path('login/', SignInView.as_view(), name='user login'),
     path('register/', SignUpView.as_view(), name='user register'),
+    path('logout/', LogoutView.as_view(), name='user logout'),
     path('profile/<int:pk>/', include([
-        path('', details_user, name='details user'),
-        path('edit/', edit_user, name='edit user'),
-        path('delete/', delete_user, name='delete user'),
+        path('', UserDetailsView.as_view(), name='details user'),
+        path('edit/', UserEditView.as_view(), name='edit user'),
+        path('delete/', UserDeleteView.as_view(), name='delete user'),
     ])),
 ]

@@ -1,11 +1,12 @@
-# photos/models.py
-
+from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 from Workshop.core.model_mixins import StrFromFieldsMixin
 from Workshop.pets.models import Pet
 from Workshop.photos.validators import validate_image_less_than_5mb
 
+
+UserModel = get_user_model()
 
 class Photo(StrFromFieldsMixin, models.Model):
     str_fields = ('id', 'publication_date', 'location', 'description')
@@ -40,6 +41,11 @@ class Photo(StrFromFieldsMixin, models.Model):
         auto_now=True,
         null=False,
         blank=True,
+    )
+
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.RESTRICT
     )
 
     tagged_pets = models.ManyToManyField(
