@@ -5,17 +5,9 @@ from django.core import validators
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from Workshop.core.model_mixins import ChoicesEnumMixin
 from Workshop.core.validators import validate_only_letters
 
-
-class ChoicesEnumMixin:
-    @classmethod
-    def choices(cls):
-        return [(x.name, x.value) for x in cls]
-
-    @classmethod
-    def max_len(cls):
-        return max(len(name) for name, _ in cls.choices())
 
 
 class Gender(ChoicesEnumMixin, Enum):

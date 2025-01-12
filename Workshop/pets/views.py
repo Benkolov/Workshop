@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
+
 
 from Workshop.core.photo_utils import apply_likes_count, apply_user_liked_photo
+from Workshop.core.utils import is_owner
 from Workshop.pets.forms import PetCreateForm, PetEditForm, PetDeleteForm
-from Workshop.pets.models import Pet
 from Workshop.pets.utils import get_pet_by_name_and_username
 
 
@@ -39,9 +40,12 @@ def add_pet(request):
 
     return render(request, 'pets/pet-add-page.html', context)
 
-
 def edit_pet(request, username, pet_slug):
     pet = get_pet_by_name_and_username(pet_slug, username)
+
+    if not is_owner(request,pet):
+        return redirect('details pet', username=username, pet_slug=pet_slug)
+
     if request.method == 'GET':
         form = PetEditForm(instance=pet)
     else:

@@ -1,12 +1,9 @@
-from django.contrib.auth.models import User
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views import generic as views, generic
-from django.contrib.auth import views as auth_view, get_user_model
-from django.shortcuts import render
+from django.views import generic as views, View
+from django.contrib.auth import views as auth_view, logout
 
 from Workshop.accounts.forms import UserCreateForm, UserModel
-from Workshop.pets.models import Pet
-from Workshop.photos.models import Photo
 
 
 class SignInView(auth_view.LoginView):
@@ -19,8 +16,13 @@ class SignUpView(views.CreateView):
     success_url = reverse_lazy('index')
 
 
-class SignOutView(auth_view.LogoutView):
-    next_page = reverse_lazy('accounts/login-page.html')
+# class SignOutView(auth_view.LogoutView):
+#     next_page = reverse_lazy('user login')
+
+class SignOutView(View):
+    def get(self, request, *args, **kwargs):
+        logout(request)  # Ръчно изчистване на сесията
+        return redirect(reverse_lazy('user login'))
 
 
 class UserDetailsView(views.DetailView):
