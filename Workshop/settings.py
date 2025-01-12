@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from django.urls import reverse_lazy
@@ -132,3 +133,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.AppUser'
 
 LOGIN_REDIRECT_URL = reverse_lazy('index')
+
+
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
