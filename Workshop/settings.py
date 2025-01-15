@@ -1,21 +1,21 @@
 import os
 from pathlib import Path
 
+from django.contrib import staticfiles
 from django.urls import reverse_lazy
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9%ox_#&z*@)@e*6ey&!fvixrfypiaouum-_-#^n_6$4wldz^5-'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-]
+print(f'SECRET_KEY: {SECRET_KEY}')
+print(f'DEBUG: {DEBUG}')
+
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'bobispets.work.gd').split(' ')
+
+print(f'ALLOWED_HOSTS: {ALLOWED_HOSTS}')
 
 
 # Application definition
@@ -71,15 +71,16 @@ WSGI_APPLICATION = 'Workshop.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "workshop_db",
-        "USER": "postgres-user",
-        "PASSWORD": "password",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "ENGINE": os.environ.get("DB_ENGINE"),
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),
+        "PORT": os.environ.get("DB_PORT"),
     }
 }
 
+DATABASES['default'] = DATABASES['default']
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -121,6 +122,8 @@ STATICFILES_DIRS = (
     BASE_DIR/'staticfiles',
 )
 
+STATIC_ROOT = '/tmp/Workshop/staticfiles'
+
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'mediafiles'
@@ -135,8 +138,23 @@ AUTH_USER_MODEL = 'accounts.AppUser'
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 
 
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_PORT = os.environ.get('EMAIL_PORT')
-EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+# EMAIL_HOST = os.environ.get('EMAIL_HOST')
+# EMAIL_PORT = os.environ.get('EMAIL_PORT')
+# EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
+# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
+    },
+}
