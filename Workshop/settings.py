@@ -12,6 +12,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = 'localhost', '127.0.0.1'
 
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -66,11 +70,11 @@ WSGI_APPLICATION = 'Workshop.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": 'django.db.backends.postgresql',
-        "NAME": 'workshop_db',
-        "USER": 'postgres-user',
-        "PASSWORD": 'password',
-        "HOST": '127.0.0.1',
-        "PORT": '5432',
+        "NAME": os.getenv("POSTGRES_DB", "workshop_db"),
+        "USER": os.getenv("POSTGRES_USER", "postgres-user"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "password"),
+        "HOST": os.getenv("DB_HOST", "db"),
+        "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
 
@@ -110,17 +114,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-
-STATICFILES_DIRS = (
-    BASE_DIR/'staticfiles',
-)
-
-STATIC_ROOT = '/tmp/Workshop/staticfiles'
+STATIC_URL = '/static/'
+STATIC_ROOT = '/app/staticfiles'
 
 MEDIA_URL = '/media/'
-
-MEDIA_ROOT = BASE_DIR / 'mediafiles'
+MEDIA_ROOT = '/app/mediafiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -133,17 +131,17 @@ LOGIN_REDIRECT_URL = reverse_lazy('index')
 
 
 
-LOGGING = {
-    'version': 1,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django.db.backends': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'level': 'DEBUG',
+#             'handlers': ['console'],
+#         },
+#     },
+# }
