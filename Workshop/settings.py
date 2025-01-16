@@ -1,21 +1,21 @@
 import os
+from dotenv import load_dotenv
 from pathlib import Path
 
 from django.contrib import staticfiles
 from django.urls import reverse_lazy
 
+load_dotenv()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-9%ox_#&z*@)@e*6ey&!fvixrfypiaouum-_-#^n_6$4wldz^5-'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = 'localhost', '127.0.0.1'
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:8000',
-    'http://127.0.0.1:8000',
-]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -110,15 +110,14 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = '/app/staticfiles'
+STATIC_URL = os.getenv("STATIC_URL", "/static/")
+STATIC_ROOT = os.getenv("STATIC_ROOT", "/app/staticfiles")
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = '/app/mediafiles'
+MEDIA_URL = os.getenv("MEDIA_URL", "/media/")
+MEDIA_ROOT = os.getenv("MEDIA_ROOT", "/app/mediafiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
