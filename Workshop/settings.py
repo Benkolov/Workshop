@@ -6,17 +6,11 @@ from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'django-insecure-9%ox_#&z*@)@e*6ey&!fvixrfypiaouum-_-#^n_6$4wldz^5-'
 
-DEBUG = os.environ.get('DEBUG')
+DEBUG = True
 
-print(f'SECRET_KEY: {SECRET_KEY}')
-print(f'DEBUG: {DEBUG}')
-
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'bobispets.work.gd').split(' ')
-
-print(f'ALLOWED_HOSTS: {ALLOWED_HOSTS}')
-
+ALLOWED_HOSTS = 'localhost', '127.0.0.1'
 
 # Application definition
 
@@ -71,12 +65,12 @@ WSGI_APPLICATION = 'Workshop.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("DB_ENGINE"),
-        "NAME": os.environ.get("DB_NAME"),
-        "USER": os.environ.get("DB_USER"),
-        "PASSWORD": os.environ.get("DB_PASSWORD"),
-        "HOST": os.environ.get("DB_HOST"),
-        "PORT": os.environ.get("DB_PORT"),
+        "ENGINE": 'django.db.backends.postgresql',
+        "NAME": 'workshop_db',
+        "USER": 'postgres-user',
+        "PASSWORD": 'password',
+        "HOST": '127.0.0.1',
+        "PORT": '5432',
     }
 }
 
@@ -138,11 +132,6 @@ AUTH_USER_MODEL = 'accounts.AppUser'
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 
 
-# EMAIL_HOST = os.environ.get('EMAIL_HOST')
-# EMAIL_PORT = os.environ.get('EMAIL_PORT')
-# EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
-# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 LOGGING = {
     'version': 1,
