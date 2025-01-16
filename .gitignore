@@ -11,8 +11,6 @@ __pycache__/
 *.py[cod]
 .idea/
 *.iml
-mediafiles/
-staticfiles/
 */migrations/
 *.log
 *.sqlite3
