@@ -32,7 +32,7 @@ def get_post_photo_form(request, form, success_url, template_path, pk=None):
 
     return render(request, template_path, context)
 
-@login_required(login_url='login')
+@login_required
 def add_photo(request):
     if request.method == 'GET':
         form = PhotoCreateForm()
