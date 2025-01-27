@@ -1,6 +1,11 @@
 version: '3.8'
 
 services:
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "1080:1080"
+      - "1025:1025"
   web:
     image: benkolov/workshop
     build:
@@ -17,6 +22,8 @@ services:
 
   db:
     image: postgres:13
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: postgres-user
       POSTGRES_PASSWORD: password

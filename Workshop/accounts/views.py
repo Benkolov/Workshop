@@ -16,12 +16,10 @@ class SignUpView(views.CreateView):
     success_url = reverse_lazy('index')
 
 
-# class SignOutView(auth_view.LogoutView):
-#     next_page = reverse_lazy('user login')
 
 class SignOutView(View):
     def get(self, request, *args, **kwargs):
-        logout(request)  # Ръчно изчистване на сесията
+        logout(request)
         return redirect(reverse_lazy('user login'))
 
 
