@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic as views, View
-from django.contrib.auth import views as auth_view, logout
+from django.contrib.auth import views as auth_view, logout, login
 
 from Workshop.accounts.forms import UserCreateForm, UserModel
 
@@ -15,7 +15,11 @@ class SignUpView(views.CreateView):
     form_class = UserCreateForm
     success_url = reverse_lazy('index')
 
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        login(request, self.object)
 
+        return response
 
 class SignOutView(View):
     def get(self, request, *args, **kwargs):
