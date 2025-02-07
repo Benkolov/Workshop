@@ -57,7 +57,7 @@ def edit_photo(request, pk):
     return get_post_photo_form(
         request,
         PhotoEditForm(request.POST or None, instance=photo),
-        success_url=reverse('index'),
+        success_url=reverse('details photo', args=(pk,)),
         template_path='photos/photo-edit-page.html',
         pk=pk,
     )

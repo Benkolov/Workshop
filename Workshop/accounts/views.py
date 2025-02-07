@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic as views, View
@@ -30,6 +31,16 @@ class SignOutView(View):
 class UserDetailsView(views.DetailView):
     template_name = 'accounts/profile-details-page.html'
     model = UserModel
+    photos_paginate_by = 2
+
+    def get_photos_page(self):
+        return self.request.GET.get('page', 1)
+
+    def get_paginated_photos(self):
+        page = self.get_photos_page()
+        photos = self.object.photo_set.order_by('-publication_date')
+        paginator = Paginator(photos, self.photos_paginate_by)
+        return paginator.get_page(page)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -41,6 +52,9 @@ class UserDetailsView(views.DetailView):
 
         context['photos_count'] = photos.count()
         context['likes_count'] = sum(x.photolike_set.count() for x in photos)
+
+        context['photos'] = self.get_paginated_photos()
+
         return context
 
 

@@ -5,4 +5,4 @@ from Workshop.pets.models import Pet
 
 @admin.register(Pet)
 class PetAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'date_of_birth']
+    list_display = ['id', 'name', 'date_of_birth', 'user', 'user_id']

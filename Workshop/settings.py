@@ -1,4 +1,7 @@
 import os
+
+import cloudinary
+from cloudinary.models import CLOUDINARY_FIELD_DB_RE
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -30,6 +33,9 @@ INSTALLED_APPS = [
     'Workshop.photos',
     'Workshop.pets',
     'Workshop.common',
+
+    'cloudinary',
+    # 'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -103,8 +109,16 @@ STATIC_URL = os.getenv("STATIC_URL", "/static/")
 STATIC_ROOT = os.getenv("STATIC_ROOT", "/app/staticfiles")
 
 MEDIA_URL = os.getenv("MEDIA_URL", "/media/")
-MEDIA_ROOT = os.getenv("MEDIA_ROOT", "/app/mediafiles")
+# MEDIA_ROOT = os.getenv("MEDIA_ROOT", "/app/mediafiles")
 
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+cloudinary.config(
+    cloud_name="dxljlsz56",
+    api_key="984485513818385",
+    api_secret="c_88TCrx7i4-OSrhrfg3lJLYNCI",
+    secure=True,
+)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

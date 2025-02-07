@@ -37,6 +37,7 @@ def add_pet(request):
     context = {
         'form': form,
     }
+    print(f'Current logged in user: {request.user.username}')
 
     return render(request, 'pets/pet-add-page.html', context)
 

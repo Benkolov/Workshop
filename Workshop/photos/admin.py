@@ -5,7 +5,7 @@ from Workshop.photos.models import Photo
 
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'publication_date', 'location', 'pets', 'description']
+    list_display = ['id', 'publication_date', 'user', 'location', 'pets', 'description']
 
     @staticmethod
     def pets(current_photo_obj):
